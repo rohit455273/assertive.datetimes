@@ -9,6 +9,8 @@
 #' cause an error; otherwise they do not.  Like \code{na.rm} in many
 #' stats package functions, except that the position of the failing
 #' values does not change.
+#' @param severity How severe should the consequences of the assertion be?  
+#' Either \code{"stop"}, \code{"warning"}, \code{"message"}, or \code{"none"}.
 #' @param .xname Not intended to be called directly.
 #' @return A logical vector that is \code{TRUE} when the input contains valid 
 #' dates or times.

@@ -25,6 +25,8 @@ is_in_future <- function(x)
 #' cause an error; otherwise they do not.  Like \code{na.rm} in many
 #' stats package functions, except that the position of the failing
 #' values does not change.
+#' @param severity How severe should the consequences of the assertion be?  
+#' Either \code{"stop"}, \code{"warning"}, \code{"message"}, or \code{"none"}.
 #' @return The \code{is_*} function return \code{TRUE} if the input is 
 #' a time in the future/past.  The \code{assert_*} functions return nothing but
 #' throw an error if the corresponding \code{is_*} function returns 
