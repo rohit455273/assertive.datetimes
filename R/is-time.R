@@ -1,5 +1,47 @@
-# TODO: add more general is_before, is_after, and fns for lubridate objects
+# TODO: add fns for lubridate objects
 # e.g., is_period_longer_than, is_duration_shorter_than, etc.
+
+#' @rdname is_in_past   
+#' @export
+is_after <- function(x, y)
+{
+  y <- if(inherits(x, "Date"))
+  {
+    coerce_to(y, "Date")  
+  } else
+  {
+    coerce_to(y, "POSIXct")
+  }
+  call_and_name(
+    function(x)
+    {
+      ok <- x > y
+      set_cause(ok, "before")
+    },
+    x
+  )
+}
+
+#' @rdname is_in_past   
+#' @export
+is_before <- function(x, y)
+{  
+  y <- if(inherits(x, "Date"))
+  {
+    coerce_to(y, "Date")  
+  } else
+  {
+    coerce_to(y, "POSIXct")
+  }
+  call_and_name(
+    function(x)
+    {
+      ok <- x < y
+      set_cause(ok, "after")
+    },
+    x
+  )
+}
 
 #' @rdname is_in_past   
 #' @export
@@ -18,7 +60,8 @@ is_in_future <- function(x)
 
 #' Is the input in the past/future?
 #'
-#' Checks to see if the input is a time in the past/future.
+#' Checks to see if the input is a time in the past/future, or before/after
+#' some time point.
 #'
 #' @param x Input to check.
 #' @param na_ignore A logical value.  If \code{FALSE}, \code{NA} values
@@ -41,6 +84,10 @@ is_in_future <- function(x)
 #' x <- Sys.time() + c(-1, 100)
 #' is_in_past(x)
 #' is_in_future(x)
+#' 
+#' # more generally, compare against any date-time
+#' is_before(x, as.POSIXct("9999-12-31"))
+#' is_after(x, as.POSIXct("0001-01-01"))
 #' @export
 is_in_past <- function(x)
 {
