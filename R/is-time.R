@@ -63,7 +63,8 @@ is_in_future <- function(x)
 #' Checks to see if the input is a time in the past/future, or before/after
 #' some time point.
 #'
-#' @param x Input to check.
+#' @param x \code{Date} or \code{POSIXt} input to check.
+#' @param y Another date-time object to compare against.
 #' @param na_ignore A logical value.  If \code{FALSE}, \code{NA} values
 #' cause an error; otherwise they do not.  Like \code{na.rm} in many
 #' stats package functions, except that the position of the failing
