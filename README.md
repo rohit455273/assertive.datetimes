@@ -23,3 +23,16 @@ Then you can install the *assertive.datetimes* package using
 library(devtools)
 install_bitbucket("richierocks/assertive.datetimes")
 ```
+
+### Predicates
+
+`is_date_string` checks character vectors to see if they contain dates and times.
+
+`is_before`, and `is_after` check whether `Date`s or `POSIXt` objects are before or after some time.
+
+`is_in_past` and `is_in_future` are like the above, compared to the present time.
+
+### Assertions
+
+All predicates return a vector and have two corresponding assertions.  For example,
+`is_after` has `assert_all_are_after` and `assert_any_are_after`.
