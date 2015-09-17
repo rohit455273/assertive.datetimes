@@ -3,9 +3,9 @@
 
 #' @rdname is_in_past   
 #' @export
-is_in_future <- function(x)
+is_in_future <- function(x, .xname = get_name_in_parent())
 {
-  x <- coerce_to(x, "POSIXct")
+  x <- coerce_to(x, "POSIXct", .xname)
   call_and_name(
     function(x)
     {
@@ -27,6 +27,7 @@ is_in_future <- function(x)
 #' values does not change.
 #' @param severity How severe should the consequences of the assertion be?  
 #' Either \code{"stop"}, \code{"warning"}, \code{"message"}, or \code{"none"}.
+#' @param .xname Not intended to be used directly.
 #' @return The \code{is_*} function return \code{TRUE} if the input is 
 #' a time in the future/past.  The \code{assert_*} functions return nothing but
 #' throw an error if the corresponding \code{is_*} function returns 
@@ -42,9 +43,9 @@ is_in_future <- function(x)
 #' is_in_past(x)
 #' is_in_future(x)
 #' @export
-is_in_past <- function(x)
+is_in_past <- function(x, .xname = get_name_in_parent())
 {
-  x <- coerce_to(x, "POSIXct")
+  x <- coerce_to(x, "POSIXct", .xname)
   call_and_name(
     function(x)
     {
