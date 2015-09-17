@@ -11,7 +11,7 @@
 #' values does not change.
 #' @param severity How severe should the consequences of the assertion be?  
 #' Either \code{"stop"}, \code{"warning"}, \code{"message"}, or \code{"none"}.
-#' @param .xname Not intended to be called directly.
+#' @param .xname Not intended to be used directly.
 #' @return A logical vector that is \code{TRUE} when the input contains valid 
 #' dates or times.
 #' @examples
@@ -25,13 +25,13 @@
 #' @export
 is_date_string <- function(x, format = "%F %T", .xname = get_name_in_parent(x))
 {
-  x <- coerce_to(x, "character")
+  x <- coerce_to(x, "character", .xname)
   format <- use_first(format)
   call_and_name(
     function(x) 
     {
       ok <- !is.na(strptime(x, format))
-      set_cause(ok, "bad format")
+      set_cause(ok, ifelse(is.na(x), "missing", "bad format"))
     }, 
     x
   )  
