@@ -5,7 +5,9 @@ assert_all_are_date_strings <- function(x, format = "%F %T", na_ignore = FALSE,
 {    
   .xname <- get_name_in_parent(x)
   msg <- gettextf(
-    "%s is not a character vector of dates.", 
+    "%s contains strings that are not in the date format '%s'.", 
+    get_name_in_parent(x),
+    format, 
     .xname
   )
   assert_engine(
@@ -26,7 +28,9 @@ assert_any_are_date_strings <- function(x, format = "%F %T", na_ignore = FALSE,
 {                   
   .xname <- get_name_in_parent(x)                                  
   msg <- gettextf(
-    "%s is not a character vector of dates.", 
+    "%s contains no strings that are in the format '%s'.", 
+    get_name_in_parent(x),
+    format, 
     .xname
   )
   assert_engine(

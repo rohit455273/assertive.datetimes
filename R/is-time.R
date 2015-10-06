@@ -1,11 +1,67 @@
-# TODO: add more general is_before, is_after, and fns for lubridate objects
+# TODO: add fns for lubridate objects
 # e.g., is_period_longer_than, is_duration_shorter_than, etc.
 
 #' @rdname is_in_past   
 #' @export
-is_in_future <- function(x, .xname = get_name_in_parent())
+is_after <- function(x, y, .xname = get_name_in_parent(x), 
+  .yname = get_name_in_parent(y))
 {
-  x <- coerce_to(x, "POSIXct", .xname)
+  if(!is_date(x)) 
+  {
+    x <- coerce_to(x, "POSIXct", .xname)
+  }
+  y <- if(is_date(x))
+  {
+    coerce_to(y, "Date", .yname)  
+  } else
+  {
+    coerce_to(y, "POSIXct", .yname)
+  }
+  call_and_name(
+    function(x)
+    {
+      ok <- x > y
+      set_cause(ok, "before")
+    },
+    x
+  )
+}
+
+#' @rdname is_in_past   
+#' @export
+is_before <- function(x, y, .xname = get_name_in_parent(x), 
+  .yname = get_name_in_parent(y))
+{  
+  if(!is_date(x)) 
+  {
+    x <- coerce_to(x, "POSIXct", .xname)
+  }
+  y <- if(is_date(x))
+  {
+    coerce_to(y, "Date", .yname)  
+  } else
+  {
+    coerce_to(y, "POSIXct", .yname)
+  }
+  call_and_name(
+    function(x)
+    {
+      ok <- x < y
+      set_cause(ok, "after")
+    },
+    x
+  )
+}
+
+#' @rdname is_in_past   
+#' @export
+is_in_future <- function(x, .xname = get_name_in_parent(x))
+{
+  # Dates stay as dates, otherwise convert to POSIXct
+  if(!is_date(x)) 
+  {
+    x <- coerce_to(x, "POSIXct", .xname)
+  }
   call_and_name(
     function(x)
     {
@@ -18,9 +74,11 @@ is_in_future <- function(x, .xname = get_name_in_parent())
 
 #' Is the input in the past/future?
 #'
-#' Checks to see if the input is a time in the past/future.
+#' Checks to see if the input is a time in the past/future, or before/after
+#' some time point.
 #'
-#' @param x Input to check.
+#' @param x \code{Date} or \code{POSIXt} input to check.
+#' @param y Another date-time object to compare against.
 #' @param na_ignore A logical value.  If \code{FALSE}, \code{NA} values
 #' cause an error; otherwise they do not.  Like \code{na.rm} in many
 #' stats package functions, except that the position of the failing
@@ -28,6 +86,7 @@ is_in_future <- function(x, .xname = get_name_in_parent())
 #' @param severity How severe should the consequences of the assertion be?  
 #' Either \code{"stop"}, \code{"warning"}, \code{"message"}, or \code{"none"}.
 #' @param .xname Not intended to be used directly.
+#' @param .yname Not intended to be used directly.
 #' @return The \code{is_*} function return \code{TRUE} if the input is 
 #' a time in the future/past.  The \code{assert_*} functions return nothing but
 #' throw an error if the corresponding \code{is_*} function returns 
@@ -42,10 +101,19 @@ is_in_future <- function(x, .xname = get_name_in_parent())
 #' x <- Sys.time() + c(-1, 100)
 #' is_in_past(x)
 #' is_in_future(x)
+#' 
+#' # more generally, compare against any date-time
+#' is_before(x, as.POSIXct("9999-12-31"))
+#' is_after(x, as.POSIXct("0001-01-01"))
+#' @importFrom assertive.types is_date
 #' @export
-is_in_past <- function(x, .xname = get_name_in_parent())
+is_in_past <- function(x, .xname = get_name_in_parent(x))
 {
-  x <- coerce_to(x, "POSIXct", .xname)
+  # Dates stay as dates, otherwise convert to POSIXct
+  if(!is_date(x)) 
+  {
+    x <- coerce_to(x, "POSIXct", .xname)
+  }
   call_and_name(
     function(x)
     {
