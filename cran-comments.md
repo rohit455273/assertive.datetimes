@@ -1,6 +1,7 @@
 ## Release Summary
 
-This package extracts content from assertive 0.3-0 into its own package.
+This is a maintenance release, with updated tests to match new assertive.base 
+behaviour.
 
 ## Test Environments
 

@@ -1,6 +1,3 @@
-# TODO: add fns for lubridate objects
-# e.g., is_period_longer_than, is_duration_shorter_than, etc.
-
 #' @include workaround.R
 #' @rdname is_in_past   
 #' @export
