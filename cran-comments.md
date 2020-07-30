@@ -5,9 +5,9 @@ behaviour.
 
 ## Test Environments
 
-* Local Windows 7 & 10, R-devel 
-* Semaphore CI + Ubuntu 14.04, R-devel and R-release
-* AppVeyor + Windows Server 2012, R-devel
+* Local macOS Mohave, R-release
+* Local Windows 10, R-devel 
+* R-hub
 
 ## R CMD check results
 
